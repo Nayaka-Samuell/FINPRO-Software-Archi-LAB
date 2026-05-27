@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #0A0A0A;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #1E1EFF;
+    color: #FFFFFF;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Blue Bottle-style thick underline accent */
+  .heading-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .heading-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #1E1EFF;
+  }
+
+  /* Marquee ticker */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+@layer components {
+  /* Primary button — electric blue */
+  .btn-primary {
+    @apply bg-blue-electric text-chalk font-bold py-3 px-8 uppercase tracking-widest text-sm transition-all duration-200 hover:bg-blue-deep active:scale-95;
+  }
+
+  /* Outline button */
+  .btn-outline {
+    @apply border-2 border-ink text-ink font-bold py-3 px-8 uppercase tracking-widest text-sm transition-all duration-200 hover:bg-ink hover:text-chalk active:scale-95;
+  }
+
+  /* White outline button (for dark backgrounds) */
+  .btn-outline-white {
+    @apply border-2 border-chalk text-chalk font-bold py-3 px-8 uppercase tracking-widest text-sm transition-all duration-200 hover:bg-chalk hover:text-ink active:scale-95;
+  }
+
+  /* Nav link */
+  .nav-link {
+    @apply text-sm font-semibold uppercase tracking-widest transition-colors duration-150 hover:text-blue-electric;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply bg-chalk-off border border-chalk-muted overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+  }
+
+  /* Section heading */
+  .section-heading {
+    @apply text-4xl md:text-5xl font-black uppercase leading-none tracking-tighter;
+  }
+
+  /* Form input */
+  .form-input {
+    @apply w-full px-4 py-3 border border-chalk-muted bg-white text-ink font-medium focus:outline-none focus:border-blue-electric transition-colors duration-200 text-sm;
+  }
+
+  /* Form label */
+  .form-label {
+    @apply block text-xs font-bold uppercase tracking-widest mb-2 text-ink-muted;
+  }
+}
