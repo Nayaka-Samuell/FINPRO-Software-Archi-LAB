@@ -77,24 +77,10 @@ const Orders = () => {
                       <span className="font-medium">{new Date(order.created_at).toLocaleDateString()} at {new Date(order.created_at).toLocaleTimeString()}</span>
                     </div>
                     <div className="flex items-center gap-6">
-                      <span className={`px-4 py-1 border text-xs font-bold uppercase tracking-widest ${
-                        order.status === 'PAID' ? 'border-green-400 text-green-400' : 
-                        order.status === 'PENDING' ? 'border-amber-400 text-amber-400' : 'border-chalk-muted text-chalk-muted'
-                      }`}>
-                        {order.status || 'PENDING'}
-                      </span>
-                      <div className="text-right hidden sm:block">
+                      <div className="text-right">
                         <span className="text-xs font-bold uppercase tracking-widest text-white/60 block mb-1">Total</span>
                         <span className="font-black text-xl">{formatRupiah(total)}</span>
                       </div>
-                      {order.status === 'PENDING' && (
-                        <button 
-                          onClick={() => window.location.href = `/payment/${order.id}`}
-                          className="bg-white text-ink hover:bg-chalk-muted font-bold py-2 px-6 uppercase tracking-widest text-xs transition"
-                        >
-                          Pay Now
-                        </button>
-                      )}
                     </div>
                   </div>
                   <div className="p-6 bg-white">

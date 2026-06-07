@@ -45,7 +45,6 @@ export declare class TransactionService {
         id: number;
         user_id: number;
         created_at: Date;
-        status: string;
     })[]>;
     getOrderDetails(userId: number, orderId: number, token: string): Promise<{
         order_id: number;
@@ -61,15 +60,4 @@ export declare class TransactionService {
         total: number;
     }>;
     getProfile(userId: number, token: string): Promise<any>;
-    payOrder(userId: number, orderId: number, paymentMethod: string, amount: number): Promise<{
-        message: string;
-        payment: {
-            payment_method: string;
-            amount: number;
-            id: number;
-            status: string;
-            order_id: number;
-            payment_date: Date;
-        };
-    }>;
 }

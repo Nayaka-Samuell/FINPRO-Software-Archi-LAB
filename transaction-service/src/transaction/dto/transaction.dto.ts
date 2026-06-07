@@ -17,11 +17,3 @@ export class UpdateCartItemDto {
   @Min(1)
   quantity: number;
 }
-
-export class PayOrderDto {
-  @IsNotEmpty()
-  payment_method: string;
-
-  @IsNotEmpty()
-  amount: number;
-}

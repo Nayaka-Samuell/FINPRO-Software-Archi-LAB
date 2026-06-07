@@ -1,5 +1,5 @@
 import { TransactionService } from './transaction.service';
-import { AddToCartDto, UpdateCartItemDto, PayOrderDto } from './dto/transaction.dto';
+import { AddToCartDto, UpdateCartItemDto } from './dto/transaction.dto';
 export declare class TransactionController {
     private readonly transactionService;
     constructor(transactionService: TransactionService);
@@ -39,7 +39,6 @@ export declare class TransactionController {
         id: number;
         user_id: number;
         created_at: Date;
-        status: string;
     })[]>;
     checkout(req: any): Promise<{
         message: string;
@@ -60,15 +59,4 @@ export declare class TransactionController {
         total: number;
     }>;
     getProfile(req: any): Promise<any>;
-    payOrder(req: any, id: string, data: PayOrderDto): Promise<{
-        message: string;
-        payment: {
-            payment_method: string;
-            amount: number;
-            id: number;
-            status: string;
-            order_id: number;
-            payment_date: Date;
-        };
-    }>;
 }

@@ -1,9 +1,6 @@
 CREATE DATABASE IF NOT EXISTS jomoro_koffee;
 USE jomoro_koffee;
 
--- Drop tables in safe order (child before parent)
-DROP TABLE IF EXISTS deliveries;
-DROP TABLE IF EXISTS payments;
 DROP TABLE IF EXISTS order_details;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS cart_items;
@@ -53,12 +50,11 @@ CREATE TABLE cart_items (
   FOREIGN KEY (cart_id) REFERENCES carts(id)
 );
 
--- Orders (transaction-service) — status column required by Prisma
+-- Orders (transaction-service)
 CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  status VARCHAR(25) NOT NULL DEFAULT 'PENDING'
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE order_details (
@@ -70,24 +66,6 @@ CREATE TABLE order_details (
   FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
-CREATE TABLE payments (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL UNIQUE,
-  payment_method VARCHAR(255) NOT NULL,
-  amount DOUBLE NOT NULL,
-  payment_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  status VARCHAR(255) NOT NULL DEFAULT 'COMPLETED',
-  FOREIGN KEY (order_id) REFERENCES orders(id)
-);
-
-CREATE TABLE deliveries (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL UNIQUE,
-  address VARCHAR(255) NOT NULL,
-  delivery_status VARCHAR(255) NOT NULL DEFAULT 'SHIPPED',
-  shipped_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id)
-);
 
 -- Seed: admin user
 INSERT INTO users (first_name, last_name, email, password, role)

@@ -5,7 +5,3 @@ export declare class AddToCartDto {
 export declare class UpdateCartItemDto {
     quantity: number;
 }
-export declare class PayOrderDto {
-    payment_method: string;
-    amount: number;
-}

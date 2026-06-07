@@ -207,27 +207,6 @@ let TransactionService = class TransactionService {
         }
         return res.json();
     }
-    async payOrder(userId, orderId, paymentMethod, amount) {
-        const order = await this.prisma.order.findUnique({ where: { id: orderId } });
-        if (!order || order.user_id !== userId) {
-            throw new common_1.NotFoundException('Order not found');
-        }
-        if (order.status !== 'PENDING') {
-            throw new common_1.BadRequestException('Order is already paid or cannot be paid.');
-        }
-        const payment = await this.prisma.payment.create({
-            data: {
-                order_id: orderId,
-                payment_method: paymentMethod,
-                amount: amount,
-            }
-        });
-        await this.prisma.order.update({
-            where: { id: orderId },
-            data: { status: 'PAID' }
-        });
-        return { message: 'Payment successful', payment };
-    }
 };
 exports.TransactionService = TransactionService;
 exports.TransactionService = TransactionService = __decorate([

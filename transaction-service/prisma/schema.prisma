@@ -27,10 +27,7 @@ model Order {
   id           Int           @id @default(autoincrement())
   user_id      Int
   created_at   DateTime      @default(now())
-  status       String        @default("PENDING") // PENDING, PAID, DELIVERED
   orderDetails OrderDetail[]
-  payment      Payment?
-  delivery     Delivery?
   @@map("orders")
 }
 
@@ -42,25 +39,4 @@ model OrderDetail {
   quantity   Int
   order      Order  @relation(fields: [order_id], references: [id])
   @@map("order_details")
-}
-
-model Payment {
-  id             Int      @id @default(autoincrement())
-  order_id       Int      @unique
-  payment_method String
-  amount         Float
-  payment_date   DateTime @default(now())
-  status         String   @default("COMPLETED")
-  order          Order    @relation(fields: [order_id], references: [id])
-  @@map("payments")
-}
-
-model Delivery {
-  id               Int      @id @default(autoincrement())
-  order_id         Int      @unique
-  address          String
-  delivery_status  String   @default("SHIPPED")
-  shipped_at       DateTime @default(now())
-  order            Order    @relation(fields: [order_id], references: [id])
-  @@map("deliveries")
 }

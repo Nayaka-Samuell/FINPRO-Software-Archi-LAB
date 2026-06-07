@@ -9,7 +9,6 @@ import Register from './pages/Register';
 import Menu from './pages/Menu';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
-import Payment from './pages/Payment';
 import Profile from './pages/Profile';
 import Products from './pages/admin/Products';
 import PrivateRoute from './components/PrivateRoute';
@@ -32,7 +31,6 @@ function App() {
                 <Route element={<PrivateRoute />}>
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/orders" element={<Orders />} />
-                  <Route path="/payment/:id" element={<Payment />} />
                   <Route path="/profile" element={<Profile />} />
                 </Route>
 

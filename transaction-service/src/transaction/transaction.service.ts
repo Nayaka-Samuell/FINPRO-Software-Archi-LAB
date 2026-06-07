@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddToCartDto, UpdateCartItemDto } from './dto/transaction.dto';
 
@@ -253,29 +253,5 @@ export class TransactionService {
       throw new BadRequestException('Failed to fetch profile');
     }
     return res.json();
-  }
-  async payOrder(userId: number, orderId: number, paymentMethod: string, amount: number) {
-    const order = await this.prisma.order.findUnique({ where: { id: orderId } });
-    if (!order || order.user_id !== userId) {
-      throw new NotFoundException('Order not found');
-    }
-    if (order.status !== 'PENDING') {
-      throw new BadRequestException('Order is already paid or cannot be paid.');
-    }
-
-    const payment = await this.prisma.payment.create({
-      data: {
-        order_id: orderId,
-        payment_method: paymentMethod,
-        amount: amount,
-      }
-    });
-
-    await this.prisma.order.update({
-      where: { id: orderId },
-      data: { status: 'PAID' }
-    });
-
-    return { message: 'Payment successful', payment };
   }
 }

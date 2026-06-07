@@ -47,9 +47,9 @@ const Cart = () => {
   const handleCheckout = async () => {
     setIsCheckingOut(true);
     try {
-      const order = await orderApi.checkout();
-      toast.success('Order placed! Please complete payment.');
-      navigate(`/payment/${order.order_id}`, { state: { total } });
+      await orderApi.checkout();
+      toast.success('Order placed successfully!');
+      navigate('/orders');
     } catch (err: any) {
       toast.error(err.message || 'Checkout failed');
     } finally {

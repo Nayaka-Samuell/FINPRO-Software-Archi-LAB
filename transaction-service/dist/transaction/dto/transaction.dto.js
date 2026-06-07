@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PayOrderDto = exports.UpdateCartItemDto = exports.AddToCartDto = void 0;
+exports.UpdateCartItemDto = exports.AddToCartDto = void 0;
 const class_validator_1 = require("class-validator");
 class AddToCartDto {
     product_id;
@@ -37,17 +37,4 @@ __decorate([
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], UpdateCartItemDto.prototype, "quantity", void 0);
-class PayOrderDto {
-    payment_method;
-    amount;
-}
-exports.PayOrderDto = PayOrderDto;
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], PayOrderDto.prototype, "payment_method", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], PayOrderDto.prototype, "amount", void 0);
 //# sourceMappingURL=transaction.dto.js.map

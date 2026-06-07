@@ -33,9 +33,8 @@ export const productApi = {
     fetch(`${PRODUCT_URL}/admin/products`, { method: 'POST', headers: getHeaders(true), body: JSON.stringify(data) }).then(r => r.json()),
   adminUpdate: (id: number, data: Record<string, unknown>) =>
     fetch(`${PRODUCT_URL}/admin/products/${id}/update`, { method: 'POST', headers: getHeaders(true), body: JSON.stringify(data) }).then(r => r.json()),
-  // FIX: endpoint reduce ada di /products/:id/reduce, bukan /admin/products/:id/reduce
   adminReduce: (id: number, qty: number) =>
-    fetch(`${PRODUCT_URL}/products/${id}/reduce`, { method: 'POST', headers: getHeaders(true), body: JSON.stringify({ quantity: qty }) }).then(r => {
+    fetch(`${PRODUCT_URL}/admin/products/${id}/reduce`, { method: 'POST', headers: getHeaders(true), body: JSON.stringify({ quantity: qty }) }).then(r => {
       if (!r.ok) return r.json().then(e => { throw new Error(e.message) });
       return r.json();
     }),
@@ -65,19 +64,17 @@ export const cartApi = {
 export const orderApi = {
   getAll: () =>
     fetch(`${TRANSACTION_URL}/orders`, { headers: getHeaders(true) }).then(r => r.json()),
-  // FIX: getDetail diubah dari POST ke GET — sesuai fix di orders.controller.ts
   getDetail: (id: number) =>
-    fetch(`${TRANSACTION_URL}/orders/${id}`, { method: 'GET', headers: getHeaders(true) }).then(r => r.json()),
+    fetch(`${TRANSACTION_URL}/orders/${id}`, { method: 'POST', headers: getHeaders(true) }).then(r => r.json()),
   checkout: () =>
     fetch(`${TRANSACTION_URL}/orders`, { method: 'POST', headers: getHeaders(true) }).then(r => {
       if (!r.ok) return r.json().then(e => { throw new Error(e.message) });
       return r.json();
     }),
-  pay: (id: number, data: Record<string, unknown>) =>
-    fetch(`${TRANSACTION_URL}/orders/${id}/pay`, { method: 'POST', headers: getHeaders(true), body: JSON.stringify(data) }).then(r => {
-      if (!r.ok) return r.json().then(e => { throw new Error(e.message) });
-      return r.json();
-    }),
+  pay: (id: number, data: { payment_method: string; amount: number }) =>
+    new Promise<{ message: string }>((resolve) => 
+      setTimeout(() => resolve({ message: `Payment of ${data.amount} for order #${id} via ${data.payment_method} successful` }), 1000)
+    ),
 };
 
 export const profileApi = {

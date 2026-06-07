@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const transaction_service_1 = require("./transaction.service");
 const transaction_dto_1 = require("./dto/transaction.dto");
 const jwt_auth_guard_1 = require("./jwt-auth.guard");
@@ -52,12 +53,11 @@ let TransactionController = class TransactionController {
     getProfile(req) {
         return this.transactionService.getProfile(req.user.id, this.extractToken(req));
     }
-    payOrder(req, id, data) {
-        return this.transactionService.payOrder(req.user.id, Number(id), data.payment_method, data.amount);
-    }
 };
 exports.TransactionController = TransactionController;
 __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get user cart with product details' }),
     (0, common_1.Get)('cart'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -65,6 +65,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "getCart", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, swagger_1.ApiOperation)({ summary: 'Add item to cart' }),
     (0, common_1.Post)('cart'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
@@ -73,6 +75,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "addToCart", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, swagger_1.ApiOperation)({ summary: 'Clear all items from cart' }),
     (0, common_1.Post)('cart/clear'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -80,6 +84,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "clearCart", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update item quantity in cart' }),
     (0, common_1.Post)('cart/:product_id/update'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('product_id')),
@@ -89,6 +95,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "updateCartItem", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove item from cart' }),
     (0, common_1.Post)('cart/:product_id/delete'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('product_id')),
@@ -97,6 +105,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "deleteCartItem", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Orders'),
+    (0, swagger_1.ApiOperation)({ summary: 'List all orders for authenticated user' }),
     (0, common_1.Get)('orders'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -104,6 +114,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "getOrders", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Orders'),
+    (0, swagger_1.ApiOperation)({ summary: 'Checkout: create order from cart' }),
     (0, common_1.Post)('orders'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -111,6 +123,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "checkout", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Orders'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get order detail by ID (product id, name, quantity, price)' }),
     (0, common_1.Post)('orders/:id'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id')),
@@ -119,22 +133,16 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "getOrderDetails", null);
 __decorate([
+    (0, swagger_1.ApiTags)('Profile'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get authenticated user profile' }),
     (0, common_1.Get)('profiles'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], TransactionController.prototype, "getProfile", null);
-__decorate([
-    (0, common_1.Post)('orders/:id/pay'),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Param)('id')),
-    __param(2, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, transaction_dto_1.PayOrderDto]),
-    __metadata("design:returntype", void 0)
-], TransactionController.prototype, "payOrder", null);
 exports.TransactionController = TransactionController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [transaction_service_1.TransactionService])

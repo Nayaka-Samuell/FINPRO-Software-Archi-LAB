@@ -11,6 +11,11 @@
     "install:all": "npm install && concurrently \"cd auth-service && npm install\" \"cd product-service && npm install\" \"cd transaction-service && npm install\" \"cd frontend && npm install\""
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mysql2": "^3.22.4"
   }
 }
